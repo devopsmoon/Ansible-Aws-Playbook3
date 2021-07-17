@@ -10,7 +10,7 @@
     - name: this will create the vpc
       ec2_vpc_net:
         name: "{{vpc_name}}"
-        cidr_block: "{[vpccidr}}"
+        cidr_block: "{{vpccidr}}"
         region: "{{region}}"
         dns_support: yes
         dns_hostnames: yes
