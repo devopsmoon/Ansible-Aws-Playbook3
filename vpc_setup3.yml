@@ -1,0 +1,20 @@
+- name: playbook will create the vpc
+  hosts: localhost
+  become: true
+  connection: local
+  gather_facts: false
+  tasks:
+    - name: importing the variables
+      include_vars: vars/vpc_setup
+
+    - name: create the vpc in aws
+      ec2_vpc_net:
+        name: "{{vpc_name}}"
+        cidr_block: "{{vpccidr}}"
+        region: "{{region}}"
+        dns_support: yes
+        dns_hostnames: yes
+        tenancy: default
+      register: vpcout
+    - debug:
+        var: vpcout
