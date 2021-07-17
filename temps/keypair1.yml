@@ -1,0 +1,20 @@
+- name: This playbook will create the keypair in aws
+  hosts: localhost
+  become: true
+  connection: local
+  gather_facts: false
+  tasks:
+    - name: This is will create the keypair
+      ec2_key:
+        name: sayeed
+        region: ap-south-1
+      register: keyout
+
+    - debug:
+        var: keyout
+
+    - name:
+      copy:
+        content: "{{keyout.key.private_key}}"
+        dest: ./sayeed-key.pem
+      when: keyout.changed == true
