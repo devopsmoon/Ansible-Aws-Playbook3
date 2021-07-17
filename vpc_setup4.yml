@@ -1,22 +1,20 @@
-- name: this playbook will create the vpc setup in aws
+- name:
   hosts: localhost
   become: true
   connection: local
   gather_facts: false
   tasks:
-    - name: importing the vairables for var directory
+    - name: Importing the variabes from var dir
       include_vars: vars/vpc_setup
 
-    - name: this will create the vpc network
+    - name: this will create the vpc
       ec2_vpc_net:
         name: "{{vpc_name}}"
-        cidr_block: "{{vpccidr}}"
         region: "{{region}}"
+        cidr_block: "{[vpccidr}}"
         dns_support: yes
         dns_hostnames: yes
         tenancy: default
       register: vpcout
-
     - debug:
         var: vpcout
-
