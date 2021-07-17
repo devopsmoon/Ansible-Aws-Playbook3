@@ -1,4 +1,4 @@
-- name:
+- name: This playbook will create the vpc
   hosts: localhost
   become: true
   connection: local
@@ -10,11 +10,24 @@
     - name: this will create the vpc
       ec2_vpc_net:
         name: "{{vpc_name}}"
-        region: "{{region}}"
         cidr_block: "{[vpccidr}}"
+        region: "{{region}}"
         dns_support: yes
         dns_hostnames: yes
         tenancy: default
+        state: present
       register: vpcout
     - debug:
         var: vpcout
+    - name: creating the subnets
+      ec2_vpc_subnet:
+        vpc_id: "{{vpcout.id.vpc}}"
+        region: "{{region}}"
+        az: "{{zone1}}"
+        cidr: "{{pubsub1cidr}}"
+        state: present
+        map_public: yes
+        tags:
+          name: vprofile-pubsub1
+      register: pubsub1out
+    t
