@@ -6,7 +6,7 @@
   tasks:
     - name: This is will create the keypair
       ec2_key:
-        name: sayeed
+        name: chicha
         region: ap-south-1
       register: keyout
 
@@ -16,5 +16,5 @@
     - name:
       copy:
         content: "{{keyout.key.private_key}}"
-        dest: ./sayeed-key.pem
+        dest: ./chicha-key.pem
       when: keyout.changed == true
