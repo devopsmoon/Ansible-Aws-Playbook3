@@ -1,13 +1,13 @@
-- name: playbook for vpc
+- name: playbook for vpc setup in aws
   hosts: localhost
   become: true
   connection: local
   gather_facts: false
   tasks:
-    - name: importing the variables
+    - name: importing the variabes
       include_vars: vars/vpc_setup
 
-    - name:
+    - name: create the vpc router
       ec2_vpc_net:
         name: "{{vpc_name}}"
         cidr_block: "{{vpccidr}}"
@@ -17,5 +17,6 @@
         tenancy: default
         state: "{{state}}"
       register: vpcout
-    - debug:
-        var: vpcout
+
+   - debug:
+       var: vpcout
