@@ -30,4 +30,4 @@
         tags:
           name: vprofile-pubsub1
       register: pubsub1out
-    t
+
