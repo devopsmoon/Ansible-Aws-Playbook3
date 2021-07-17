@@ -1,0 +1,17 @@
+- name: This playbook will create the aws key pair in aws
+  hosts: localhost
+  become: true
+  connection: local
+  gather_facts: false
+  tasks:
+    - name:
+      ec2_key:
+        name: sample
+        region: "ap-south-1"
+      register: keyout
+    - debug:
+        var: keyout
+    - name:
+      copy:
+        content: "{{keyout.key.private_key}}"
+        dest: /root/Ansible-Aws-Playbook3/sample-key.pem

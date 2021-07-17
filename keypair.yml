@@ -1,0 +1,19 @@
+- name: This playbook will create the vpc setup in aws
+  hosts: localhost
+  become: true
+  connection: local
+  gather_facts: false
+  tasks:
+    - name:
+      ec2_key:
+        name: sample
+        region: "{{ap-south-1}}"
+      register: keyout
+
+    - debug:
+        var: keyout
+
+    - name:
+      copy:
+        content: "{{keyout.key.private_key}}"
+        dest: /root/Ansible-Aws-playbook3/sample.pem
