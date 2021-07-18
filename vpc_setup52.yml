@@ -54,7 +54,7 @@
         cidr: "{{pubsub3cidr}}"
         map_public: yes
         resource_tags:
-          name: vprofile-public-subnet3
+          Name: vprofile-public-subnet3
       register: pubsub2_out
 
     - name: creating the private subent1
