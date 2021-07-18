@@ -1,0 +1,35 @@
+- name:
+  hosts: localhost
+  become: true
+  connection: local
+  gather_facts: false
+  tasks:
+    - name: importing the variables
+      include_vars: vars/vpc_setup
+
+    - name: creating the vpc
+      ec2_vpc_net:
+        name: "{{vpc_name}}"
+        region: "{{region}}"
+        cidr_block: "{{vpccidr}}"
+        dns_support: yes
+        dns_hostnames: yes
+        tenancy: default
+        state: present
+      register: vpcout
+
+    - debug:
+        var: vpcount
+
+    - name:
+      ec2_vpc_subnet:
+        vpc_id: "{{vpcout.vpc.id}}"
+        region: "{{region}}"
+        cidr: "{{pubsub1cidr}}"
+        az: "{{zone1}}"
+        state: present
+        map_public: yes
+        resource_tags:
+          name: vprofile-pubsub1
+      register: pubsub1out
+
