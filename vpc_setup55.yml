@@ -9,7 +9,7 @@
 
     - name: vpc setup
       ec2_vpc_net:
-        name: "{{vpc_name}"
+        name: "{{vpc_name}}"
         region: "{{region}}"
         state: present
         cidr_block: "{{vpccidr}}"
