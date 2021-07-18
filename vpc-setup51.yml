@@ -40,8 +40,8 @@
         state: present
         cidr: "{{pubsub2cidr}}"
         map_public: yes
-        tags:
-          name: vprofile-public-subnet2
+        resource_tags:
+          Name: vprofile-public-subnet2
       register: pubsub2out
 
     - name: creating the public subnet 3
@@ -52,8 +52,8 @@
         state: present
         cidr: "{{pubsub3cidr}}"
         map_public: yes
-        tags:
-          name: vprofile-public-subnet3
+        resource_tags:
+          Name: vprofile-public-subnet3
       register: pubsub3out
 
     - name: creating the private subnet 1
@@ -63,8 +63,8 @@
         az: "{{zone1}}"
         state: present
         cidr: "{{prisub1cidr}}"
-        tags:
-          name: vprofile-private-subnet1
+        resource_tags:
+          Name: vprofile-private-subnet1
       register: prisub1out
 
     - name: creating the private subnet 2
@@ -74,8 +74,8 @@
         az: "{{zone2}}"
         state: present
         cidr: "{{prisub2cidr}}"
-        tags:
-          name: vprofile-private-subnet2
+        resource_tags:
+          Name: vprofile-private-subnet2
       register: prisub2out
 
     - name: creating the private subnet 3
@@ -85,6 +85,6 @@
         az: "{{zone3}}"
         state: present
         cidr: "{{prisub3cidr}}"
-        tags:
-          name: vprofile-private-subnet3
+        resource_tags:
+          Name: vprofile-private-subnet3
       register: prisub3out
