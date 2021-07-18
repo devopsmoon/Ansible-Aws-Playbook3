@@ -1,5 +1,5 @@
 - name: this playbook will create the vpc in aws
-  hosts: local
+  hosts: localhost
   become: true
   connection: local
   gather_facts: false
