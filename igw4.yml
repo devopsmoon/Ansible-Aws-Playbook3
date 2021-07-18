@@ -1,0 +1,29 @@
+- name:
+  hosts: localhost
+  become: true
+  connection: local
+  gather_facts: false
+  tasks:
+    - name: creating the igw in aws
+      ec2_vpc_igw:
+        vpc_id: "{{vpcout.vpc.id}}"
+        region: "{{region}}"
+        state: present
+        tags:
+          Name: vprofile-igw
+      register: igw_out
+
+    - name: creating the route table in aws
+      ec2_vpc_route_table:
+        vpc_id: "{{vpcout.vpc.id}}"
+        region: "{{region}}"
+        tags:
+          Name: vprofile-publicRT
+        subnets:
+          - "{{pubsub1_out.subnet.id}}"
+          - "{{pubsub2_out.subnet.id}}"
+          - "{{pubsub3_out.subnet.id}}"
+        routes:
+          dest: 0.0.0.0/0
+          gateway_id: "{{igw_out.gateway_id}}"
+      register: pubRT_out
