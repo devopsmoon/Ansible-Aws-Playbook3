@@ -28,8 +28,8 @@
         state: present
         cidr: "{{pubsub1cidr}}"
         map_public: yes
-        tags:
-          name: vprofile-public-subnet1
+        resource_tags:
+          Name: vprofile-public-subnet1
       register: pubsub1out
 
     - name: creating the public subnet 2
