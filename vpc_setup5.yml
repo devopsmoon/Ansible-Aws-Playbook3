@@ -19,7 +19,7 @@
       register: vpcout
 
     - debug:
-        var: vpcount
+        var: vpcout
 
     - name:
       ec2_vpc_subnet:
