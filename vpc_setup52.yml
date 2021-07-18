@@ -81,7 +81,7 @@
 
     - name: creating the private subnet3
       ec2_vpc_subnet:
-        vpc_id: "{{vpcout.vpc.in}}"
+        vpc_id: "{{vpcout.vpc.id}}"
         region: "{{region}}"
         az: "{{zone3}}"
         state: present
