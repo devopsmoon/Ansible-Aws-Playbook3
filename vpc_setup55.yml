@@ -1,0 +1,115 @@
+- name: this playbook will create the vpc in aws
+  hosts: local
+  become: true
+  connection: local
+  gather_facts: false
+  tasks:
+    - name: importing variables
+      include_vars: vars/vpc_setup
+
+    - name: vpc setup
+      ec2_vpc_net:
+        name: "{{vpc_id"
+        region: "{{region}}"
+        state: present
+        cidr_block: "{{vpccidr}}"
+        tenancy: default
+        dns_support: yes
+        dns_hostnames: yes
+      register: vpcout
+
+    - debug:
+        var: vpcout
+
+    - name: creating the public subnet1
+      ec2_vpc_subnet:
+        vpc_id: "{{vpcout.vpc.in}}"
+        region: "{{region}}"
+        az: "{{zone1}}"
+        state: present
+        cidr: "{{pubsub1cidr}}"
+        map_public: yes
+        tags:
+          Name: vprofile-public-subnet1
+      register: pubsub1_out
+
+    - name: creating the public subent2
+      ec2_vpc_subnet:
+        vpc_id: "{{vpcout.vpc.id}}"
+        region: "{{region}}"
+        az: "{{zone2}}"
+        state: present
+        cidr: "{{pubsub2cidr}}"
+        map_public: yes
+        tags:
+          Name: vprofile-public-subnet2
+      register: pubsub2_out
+
+    - name: creating the public subnet3
+      ec2_vpc_subnet:
+        vpc_id: "{{vpcout.vpc.id}}"
+        region: "{{region}}"
+        az: "zone3"
+        state: present
+        cidr: "{{pubsub3cidr}}"
+        map_public: yes
+        tags:
+          Name: vprofile-public-subnet3
+      register: pubsub3_out
+
+    - name: creating the private subnet1
+      ec2_vpc_subnet:
+        vpc_id: "{[vpcout.vpc.in}}"
+        region: "{{region}}"
+        az: "{{zone1}}"
+        state: present
+        cidr: "{{prisub1cidr}}"
+        tags:
+          Name: vprofile-private-subnet1
+      register: prisub1_out
+
+    - name: creating the private subent2
+      ec2_vpc_subnet:
+        vpc_id: "{{vpcout.vpc.id}}"
+        region: "{{region}}"
+        az: "{{zone2}}"
+        state: present
+        cidr: "{{prisub2cidr}}"
+        tags:
+          Name: vprofile-private-subnet2
+      register: prisub2_out
+
+    - name: creating the private subnet3
+      ec2_vpc_subnet:
+        vpc_id: "{{vpcout.vpc.id}}"
+        region: "{{region}}"
+        az: "{{zone3}}"
+        state: present
+        cidr: "{{prisub3cidr}}"
+        tags:
+          Name: vprofile-private-subnet3
+      register: prisub3_out
+
+    - name: creating the igw
+      ec2_vpc_igw:
+        vpc_id: "{{vpcout.vpc.id}}"
+        region: "{{region}}"
+        state: present
+        tags:
+          Name: vprofile-igw
+      register: igw_out
+
+    - name: creating the route table in public subnet
+      ec2_vpc_route_table:
+        vpc_id: "{{vpcout.vpc.id}}"
+        region: "{{region}}"
+        tags:
+          Name: vprofile-publicRT
+        subnets:
+          - "{{pubsub1_out.subnet.id}}"
+          - "{{pubsub2_out.subnet.id}}"
+          - "{{pubsub3_out.subnet.id}}"
+        routes:
+          - dest: 0.0.0.0/0
+            gateway_id: "{{igw_out.gateway_id}}"
+      register: publicRT_out
