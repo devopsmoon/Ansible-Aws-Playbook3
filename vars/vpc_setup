@@ -12,11 +12,11 @@ pubsub5cidr: 172.20.5.0/24
 pubsub6cidr: 172.20.6.0/24
 
 # vpc region
-region: "ap-south-1"
+region: "us-east-1"
 
 # vpc zones
-zone1: ap-south-1a
-zone2: ap-south-1b
-zone3: ap-south-1c
+zone1: us-east-1a
+zone2: us-east-1b
+zone3: us-east-1c
 
 state: present
