@@ -150,7 +150,7 @@
         - prisub2_out.subnet.id
         - prisub3_out.subnet.id
         - igw_out.gateway_id
-        - pubRT_out.route_tabe.id
+        - pubRT_out.route_table.id
         - natgw_out.nat_gateway_id
         - priRT_out.route_table.id
 
