@@ -115,4 +115,27 @@
             gateway_id: "{{igw_out.gateway_id}}"
       register: publicRT_out
 
+    - name: setup the nat gateway and allocate the EIP
+      ec2_vpc_nat_gateway:
+        state: present
+        subnet_id: "{{pubsub1_out.subnet_id}}"
+        wait: true
+        region: "{{region}}"
+        if_exist_do_not_create: true
+      register: natgw_out
 
+    - name: creating the route table for private subnet
+      ec2_vpc_route_table:
+        vpc_id: "{{vpcout.vpc.id}}"
+        state: present
+        region: "{{region}}"
+        tags:
+          Name: vprofile-PriRT
+        subnets:
+          - "{{prisub1_out.subnet_id}}"
+          - "{{prisub2_out.subnet_id}}"
+          - "{{prisub3_out.subnet_id}}"
+        routes:
+          - dest: 0.0.0.0/0
+            gateway_id: "{{natgw_out.gateway_id}}"
+      register: privateRT_out
