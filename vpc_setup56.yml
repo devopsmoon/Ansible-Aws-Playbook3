@@ -13,6 +13,7 @@
         region: "{{region}}"
         state: present
         cidr_block: "{{vpccidr}}"
+        tenancy: default
         dns_support: yes
         dns_hostnames: yes
       register: vpcout
