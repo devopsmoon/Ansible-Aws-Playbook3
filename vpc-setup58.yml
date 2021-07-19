@@ -111,6 +111,9 @@
             gateway_id: "{{igw_out.gateway_id}}"
       register: pubRT_out
 
+    - debug:
+        var: pubRT_out
+
     - name: creating the nat gateway and allocate the EIP
       ec2_vpc_nat_gateway:
         state: present
