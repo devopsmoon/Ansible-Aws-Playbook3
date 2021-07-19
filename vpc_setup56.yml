@@ -88,7 +88,7 @@
         region: "{{region}}"
         az: "{{zone2}}"
         state: present
-        cidr: "prisub2cidr}}"
+        cidr: "{{prisub2cidr}}"
         tags:
           Name: vprofile-prisubnet2
       register: prisub2_out
