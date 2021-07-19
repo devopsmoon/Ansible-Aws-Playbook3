@@ -7,7 +7,7 @@
     - name: importing the variables
       include_vars: vars/vpc_setup
 
-    - name: creating the vpc name and cidr_block
+    - name: vpc-setup
       ec2_vpc_net:
         name: "{{vpc_name}}"
         region: "{{region}}"
@@ -15,8 +15,6 @@
         cidr_block: "{{vpccidr}}"
         dns_support: yes
         dns_hostnames: yes
-        tags:
-          Name: vprofile-vpc
       register: vpcout
 
     - debug:
