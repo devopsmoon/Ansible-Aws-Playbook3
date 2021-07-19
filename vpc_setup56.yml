@@ -29,10 +29,10 @@
         cidr: "{{pubsub1cidr}}"
         map_public: yes
         tags:
-          Name: vprofile-pubsubent2
+          Name: vprofile-pubsubnet1
       register: pubsub1_out
 
-    - name: creating the public subent2
+    - name: creating the public subnet2
       ec2_vpc_subnet:
         vpc_id: "{{vpcout.vpc.id}}"
         region: "{{region}}"
@@ -41,7 +41,7 @@
         cidr: "{{pubsub2cidr}}"
         map_public: yes
         tags:
-          Name: vprofile-pubsubnet3
+          Name: vprofile-pubsubnet2
       register: pubsub2_out
 
     - name: creating the public subnet3
