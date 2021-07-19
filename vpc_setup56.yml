@@ -118,7 +118,7 @@
     - name: setup the nat gateway and allocate the EIP
       ec2_vpc_nat_gateway:
         state: present
-        subnet_id: "{{ pubsub1_out.subnet_id }}"
+        subnet_id: "{{ pubsub1_out.subnet.id }}"
         wait: yes
         region: "{{region}}"
         if_exist_do_not_create: true
@@ -131,9 +131,9 @@
         tags:
           Name: vprofile-PriRT
         subnets:
-          - "{{prisub1_out.subnet_id}}"
-          - "{{prisub2_out.subnet_id}}"
-          - "{{prisub3_out.subnet_id}}"
+          - "{{prisub1_out.subnet.id}}"
+          - "{{prisub2_out.subnet.id}}"
+          - "{{prisub3_out.subnet.id}}"
         routes:
           - dest: 0.0.0.0/0
             gateway_id: "{{natgw_out.gateway_id}}"
