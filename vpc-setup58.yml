@@ -74,7 +74,7 @@
         cidr: "{{prisub2cidr}}"
         tags:
           Name: vprofile-prisubnet2
-      register: prisubnet2_out
+      register: prisub2_out
 
     - name: creating the private subnet3
       ec2_vpc_subnet:
@@ -97,15 +97,15 @@
 
     - name: creating the route table in public subnet
       ec2_vpc_route_table:
-        vpc_id: "vpcout.vpc.id}}"
+        vpc_id: "{{vpcout.vpc.id}}"
         region: "{{region}}"
         state: present
         tags:
           Name: vprofile-pubRT
         subnets:
-          - "{{pubsub1_out.subnet_id}}"
-          -  "{{pubsub2_out.subnet_id}}"
-          -  "{{pubsub3_out.subnet_id}}"
+          - "{{pubsub1_out.subnet.id}}"
+          - "{{pubsub2_out.subnet.id}}"
+          - "{{pubsub3_out.subnet.id}}"
         routes:
           - dest: 0.0.0.0/0
             gateway_id: "{{igw_out.gateway_id}}"
@@ -126,7 +126,7 @@
         state: present
         region: "{{region}}"
         tags:
-          Name: vprofile-prisubRT
+          Name: vprofile-priRT
         subnets:
           - "{{prisub1_out.subnet.id}}"
           -  "{{prisub2_out.subnet.id}}"
@@ -134,5 +134,4 @@
         routes:
           - dest: 0.0.0.0/0
             gateway_id: "{{natgw_out.nat_gateway.id}}"
-
       register: priRT_out
