@@ -149,5 +149,5 @@
         - igw_out.gateway.id
         - pubRT_out.route_tabe.id
         - natgw_out.nat_gateway_id
-        - priRT_out.rout_table.id
+        - priRT_out.route_table.id
 
