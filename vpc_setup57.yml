@@ -128,6 +128,6 @@
           - "{{prisub3_out.subnet.id}}"
         routes:
           - dest: 0.0.0.0/0
-            gateway_id: "{{igw_out.nat_gateway_id}}"
+            gateway_id: "{{natgw_out.nat_gateway_id}}"
       register: natgw_out
 
