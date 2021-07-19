@@ -114,7 +114,7 @@
     - name: creating the nat gateway and allocate the EIP
       ec2_vpc_nat_gateway:
         state: present
-        subnet_id: "{{pubsub1_out.subnet_id}}"
+        subnet_id: "{{pubsub1_out.subnet.id}}"
         region: "{{region}}"
         wait: true
         if_exist_do_not_create: true
