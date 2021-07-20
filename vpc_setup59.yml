@@ -90,7 +90,7 @@
           Name: vprofile-prisubnet3
       register: prisub3_out
 
-    - name:
+    - name: creating public internet gateway
       ec2_vpc_igw:
         vpc_id: "{{vpcout.vpc.id}}"
         region: "{{region}}"
