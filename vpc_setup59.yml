@@ -138,7 +138,7 @@
         routes:
           - dest: 0.0.0.0/0
             gateway_id: "{{natgw_out.nat_gateway_id}}"
-      register: priRT_out
+      register: prirt_out
 
     - debug:
         var: "{{item}}"
