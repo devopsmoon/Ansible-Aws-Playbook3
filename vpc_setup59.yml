@@ -117,11 +117,11 @@
 
     - name: creating the nat gateway and allocate the EIP
       ec2_vpc_nat_gateway:
-      state: present
-      region: "{{region}}"
-      wait: true
-      subnet_id: "{{pubsub1_out.subnet.id}}"
-      if_exist_do_not_create: true
+        state: present
+        region: "{{region}}"
+        wait: true
+        subnet_id: "{{pubsub1_out.subnet.id}}"
+        if_exist_do_not_create: true
       register: natgw_out
 
     - name: creating the route table for private subnet
