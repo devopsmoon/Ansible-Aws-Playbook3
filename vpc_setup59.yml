@@ -112,7 +112,7 @@
           - "{{pubsub3cidr.subnet.id}}"
         routes:
           - dest: 0.0.0.0/0
-            gateway_id: "{{igw_out.gateway.id}}"
+            gateway_id: "{{igw_out.gateway_id}}"
       register: pubrt_out
 
     - name: creating the nat gateway and allocate the EIP
@@ -137,7 +137,7 @@
           -  "{{prisub3cidr.subnet.id}}"
         routes:
           - dest: 0.0.0.0/0
-            gateway_id: "{{natgw_out.nat_gateway.id}}"
+            gateway_id: "{{natgw_out.nat_gateway_id}}"
       register: priRT_out
 
     - debug:
