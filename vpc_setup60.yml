@@ -1,15 +1,15 @@
-- name: this playbook will create the vpc in aws
+- name: creating the vpc setup in aws
   hosts: localhost
   become: true
   connection: local
-  gather_facts: false
+  gather_facts: yes
   tasks:
     - name: importing the variables
       include_vars: vars/vpc_setup
 
-    - name: setting up vpc and cidr block
+    - name: creating the vpc name and cidr block
       ec2_vpc_net:
-        name: "{{vpc_name}}"
+        name: "{{vpc_id}}"
         region: "{{region}}"
         state: present
         cidr_block: "{{vpccidr}}"
@@ -21,14 +21,13 @@
     - debug:
         var: vpcout
 
-    - name: creating the public subent1
+    - name: creating the public subnet1
       ec2_vpc_subnet:
         vpc_id: "{{vpcout.vpc.id}}"
         region: "{{region}}"
         state: present
         az: "{{zone1}}"
         cidr: "{{pubsub1cidr}}"
-        map_public: yes
         tags:
           Name: vprofile-pubsubnet1
       register: pubsub1_out
@@ -40,7 +39,7 @@
         state: present
         az: "{{zone2}}"
         cidr: "{{pubsub2cidr}}"
-        map_public: true
+        map_public: yes
         tags:
           Name: vprofile-pubsubnet2
       register: pubsub2_out
@@ -55,7 +54,7 @@
         map_public: yes
         tags:
           Name: vprofile-pubsubnet3
-      register: pubsub2_out
+      register: pubsub3_out
 
     - name: creating the private subnet1
       ec2_vpc_subnet:
@@ -90,70 +89,35 @@
           Name: vprofile-prisubnet3
       register: prisub3_out
 
-    - name:
+    - name: creating the internet gateway
       ec2_vpc_igw:
         vpc_id: "{{vpcout.vpc.id}}"
         region: "{{region}}"
         state: present
         tags:
-          Name: vprofile-PubIGW
+          Name: vproifle-IGW
       register: igw_out
 
-    - name: creating the route table for public subnet
+    - name: creating the route table in public subnet
       ec2_vpc_route_table:
         vpc_id: "{{vpcout.vpc.id}}"
         region: "{{region}}"
         state: present
         tags:
-          Name: vprofile-pubRT
+          Name: vprofile-IGW
         subnets:
           - "{{pubsub1cidr.subnet.id}}"
           - "{{pubsub2cidr.subnet.id}}"
-          - "{{pubsub3cidr.subnet.id}}"
+          - "{{pubusub3cidr.subnet.id}}"
         routes:
           - dest: 0.0.0.0/0
             gateway_id: "{{igw_out.gateway_id}}"
-      register: pubrt_out
+      register: pubRT_out
 
     - name: creating the nat gateway and allocate the EIP
       ec2_vpc_nat_gateway:
-      state: present
-      region: "{{region}}"
-      wait: true
-      subnet_id: "{{pubsub1cidr_out.subnet.id}}"
-      if_exist_do_not_create: true
-      register: natgw_out
-
-    - name: creating the route table for private subnet
-      ec2_vpc_route_table:
-        vpc_id: "{{vpcout.vpc.id}}"
-        region: "{{region}}"
         state: present
-        tags:
-          Name: vprofile-pirRT
-        subnets:
-          - "{{prisub1cidr.subnet.id}}"
-          -  "{{prisub2cidr.subnet.id}}"
-          -  "{{prisub3cidr.subnet.id}}"
-        routes:
-          - dest: 0.0.0.0/0
-            gateway_id: "{{natgw_out.nat_gateway_id}}"
-      register: priRT_out
-
-    - debug:
-        var: "{{item}}"
-      loop:
-        - vpcout_vpc_id
-        - pubsub1_out.subnet.id
-        - pubsud2_out.subnet.id
-        - pubsub3_out.subnet.id
-        - prisub1_out.subnet.id
-        - prisub2_out.subnet.id
-        - prisub3_out.subnet.id
-        - igw_out.subnet.id
-        - pubRT_out.subnet.id
-        - priRt_out.subnet.id
-
+        subnet_id: "{{igw_out."
 
 
 
