@@ -107,12 +107,12 @@
         tags:
           Name: vprofile-pubRT
         subnets:
-          - "{{prisub1cidr}}"
-          - "{{prisub2cidr}}"
-          - "{{prisub3cidr}}"
+          - "{{pubsub1cidr}}"
+          - "{{pubsub2cidr}}"
+          - "{{pubsub3cidr}}"
         routes:
           - dest: 0.0.0.0/0
-            gateway_id: "{{igw_out.gateway_id}}"
+            gateway_id: "{{igw_out.gateway.id}}"
       register: pubrt_out
 
     - name: creating the nat gateway and allocate the EIP
