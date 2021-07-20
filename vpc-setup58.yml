@@ -103,9 +103,9 @@
         tags:
           Name: vprofile-pubRT
         subnets:
-          - "{{pubsub1_out.subnet.id}}"
-          - "{{pubsub2_out.subnet.id}}"
-          - "{{pubsub3_out.subnet.id}}"
+          - "{{pubsub1cidr.subnet.id}}"
+          - "{{pubsub2cidr.subnet.id}}"
+          - "{{pubsub3cidr.subnet.id}}"
         routes:
           - dest: 0.0.0.0/0
             gateway_id: "{{igw_out.gateway_id}}"
@@ -131,9 +131,9 @@
         tags:
           Name: vprofile-priRT
         subnets:
-          - "{{prisub1_out.subnet.id}}"
-          - "{{prisub2_out.subnet.id}}"
-          - "{{prisub3_out.subnet.id}}"
+          - "{{prisub1cidr.subnet.id}}"
+          - "{{prisub2cidr.subnet.id}}"
+          - "{{prisub3cidr.subnet.id}}"
         routes:
           - dest: 0.0.0.0/0
             gateway_id: "{{natgw_out.nat_gateway_id}}"

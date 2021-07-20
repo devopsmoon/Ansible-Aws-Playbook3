@@ -102,8 +102,8 @@
     - name: creating the route table for public subnet
       ec2_vpc_route_table:
         vpc_id: "{{vpcout.vpc.id}}"
-        state: present
         region: "{{region}}"
+        state: present
         tags:
           Name: vprofile-pubRT
         subnets:
